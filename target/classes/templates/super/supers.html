@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.1/flatly/bootstrap.min.css" rel="stylesheet" integrity="sha384-WuViQmTamrPyvMFZjf8te7HpKtdxuzV/HX1yG26a0d8yieIBr+beDf1ME99iX1cM" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <title>All Known Super People</title>
+    <style>
+        #radar {
+            height: 50px;
+        }
+
+        #main {
+            padding-top: 10px;
+        }
+
+        .profilePic {
+            border-radius: 10px;
+            width: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <nav class="row navbar navbar-expand-lg navbar-dark bg-primary">
+            <a class="navbar-brand" href="/"><img id="radar" src="/icons/radar.svg" alt="Radar for spotting supers"> Super Sightings</a>
+            <div id="navbarColor01">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/sightings">Sightings</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/locations">Locations</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/supers">Super People<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/organizations">Organizations</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="row" id="main">
+            <h2 class="col-10">All Known Super People</h2>
+            <div class="col-2 align-self-center">
+                <a href="/super/add" class="col-12 btn btn-primary" title="Add a super person.">Add</a>
+            </div>
+        </div>
+        <div class="row">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>&nbsp;</th>
+                        <th>Name</th>
+                        <th>Alignment</th>
+                        <th>Associated Organizations</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="super : ${supers}">
+                        <td><img class="profilePic" th:if="${super.image != ''}" th:src="${super.image}">
+                            <img class="profilePic" th:if="${super.image == ''}" src="http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg"></td>
+                        <td th:text="${super.name}">Storm</td>
+                        <td th:text="${super?.getAlignmentDescription()}">Hero</td>
+                        <td>
+                            <ul th:each="organization: ${super?.organizations}">
+                                <li th:text="${organization?.name}">X-Men</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <a th:href="@{/super/view/{superId}(superId=${super.superId})}" href="#" class="btn btn-info" th:title="'View ' + ${super.name}"><i class="far fa-eye"></i></a>
+                            <a th:href="@{/super/edit/{superId}(superId=${super.superId})}" href="#" class="btn btn-primary" th:title="'Edit ' + ${super.name}"><i class="fas fa-pencil-alt"></i></a>
+                            <a th:href="@{/super/delete/{superId}(superId=${super.superId})}" onclick="return confirm('Are you sure?')" class="btn btn-danger" th:title="'Delete ' + ${super.name}"><i class="fas fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="container text-center">
+        <footer id="footer">
+            <hr/>
+            <p><small>Style template made by <a href="http://thomaspark.co">Thomas Park</a>. |
+                Code released under the <a href="https://github.com/thomaspark/bootswatch/blob/master/LICENSE">MIT License</a>. |
+                Based on <a href="https://getbootstrap.com" rel="nofollow">Bootstrap</a>. |
+                Icons from <a href="http://fontawesome.io/" rel="nofollow">Font Awesome</a> and
+                radar icon by <a href="https://www.flaticon.com/authors/darius-dan" title="Darius Dan">Darius Dan</a>
+                from <a href="https://www.flaticon.com/">www.flaticon.com</a>.</p>
+            <p>Images provided by Marvel. <a href="http://marvel.com">© 2014 Marvel</a></small></p>
+        </footer>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.1/flatly/bootstrap.min.css" rel="stylesheet" integrity="sha384-WuViQmTamrPyvMFZjf8te7HpKtdxuzV/HX1yG26a0d8yieIBr+beDf1ME99iX1cM" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <title>Add Organization</title>
+    <style>
+        #radar {
+            height: 50px;
+        }
+
+        #main {
+            padding-top: 10px;
+        }
+
+        .scroll {
+            height: 150px;
+            overflow: auto;
+        }
+
+        label {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <nav class="row navbar navbar-expand-lg navbar-dark bg-primary">
+            <a class="navbar-brand" href="/"><img id="radar" src="/icons/radar.svg" alt="Radar for spotting supers"> Super Sightings</a>
+            <div id="navbarColor01">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/sightings">Sightings</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/locations">Locations</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/supers">Super People</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/organizations">Organizations<span class="sr-only">(current)</span></a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="col-md-6" id="main">
+            <h2>Add Organization</h2>
+            <form class="form-horizontal" role="form" method="POST" novalidate>
+                <div class="form-group row">
+                    <label for="txtOrganizationName" class="col-4 control-label">Organization Name:</label>
+                    <div class="col-8">
+                        <input type="text" id="txtOrganizationName" class="form-control" name="name" th:value="${organization?.name}">
+                        <span class="text-danger" th:if="${#fields.hasErrors('organization.name')}" th:errors="*{organization.name}">Name error</span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="txtDescription" class="col-4 control-label">Description:</label>
+                    <div class="col-8">
+                        <textarea class="form-control scroll" id="txtDescription" name="description" th:text="${organization?.description}"></textarea>
+                        <span class="text-danger" th:if="${#fields.hasErrors('organization.description')}" th:errors="*{organization.description}">Description error</span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="txtLocationName" class="col-4 control-label">Headquarters:</label>
+                    <div class="col-8" th:if="${organization.location != null}">
+                        <select class="form-control" id="txtLocationName" name="location">
+                                <option value="">Undisclosed Location</option>
+                                <option th:each="location: ${allLocations}" th:selected="${organization.hasLocation(location)}"
+                                    th:value="${location.locationId}"
+                                    th:text="${location.name} + ' ' + ${location.latitude} + ', ' + ${location.longitude}">
+                                    Manor 90.149404, -70.232456
+                                </option>
+                        </select>
+                    </div>
+                    <div class="col-8" th:if="${organization.location == null}">
+                        <select class="form-control" id="txtLocationName" name="location">
+                                <option selected value="">Undisclosed Location</option>
+                                <option th:each="location: ${allLocations}"
+                                    th:value="${location.locationId}"
+                                    th:text="${location.name} + ' ' + ${location.latitude} + ', ' + ${location.longitude}">
+                                    Manor 90.149404, -70.232456
+                                </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="txtSupers" class="col-4 control-label">Members:</label>
+                    <div id="txtSupers" class="col-8 scroll">
+                        <div class="form-check" th:each="super: ${allSupers}">
+                            <label class="form-check-label">
+                                    <input class="form-check-input" name="checkedSuperIds" type="checkbox" th:value="${super.superId}">
+                                    <span th:text="${super.name}">Super Name</span>
+                                </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-8">
+                        <button class="btn btn-primary" type="submit">Save</button>
+                        <a href="/organizations" class="btn btn-danger">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="container text-center">
+        <footer id="footer">
+            <hr/>
+            <p><small>Style template made by <a href="http://thomaspark.co">Thomas Park</a>. |
+                Code released under the <a href="https://github.com/thomaspark/bootswatch/blob/master/LICENSE">MIT License</a>. |
+                Based on <a href="https://getbootstrap.com" rel="nofollow">Bootstrap</a>. |
+                Icons from <a href="http://fontawesome.io/" rel="nofollow">Font Awesome</a> and
+                radar icon by <a href="https://www.flaticon.com/authors/darius-dan" title="Darius Dan">Darius Dan</a>
+                from <a href="https://www.flaticon.com/">www.flaticon.com</a>.</p>
+            <p>Images provided by Marvel. <a href="http://marvel.com">© 2014 Marvel</a></small></p>
+        </footer>
+    </div>
+</body>
+
+</html>

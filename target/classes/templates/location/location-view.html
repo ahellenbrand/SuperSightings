@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.1/flatly/bootstrap.min.css" rel="stylesheet" integrity="sha384-WuViQmTamrPyvMFZjf8te7HpKtdxuzV/HX1yG26a0d8yieIBr+beDf1ME99iX1cM" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <title th:text="'View Location #' + ${location.locationId}">View Location #1</title>
+    <style>
+        #radar {
+            height: 50px;
+        }
+
+        #main {
+            padding-top: 10px;
+        }
+
+        .scroll {
+            height: 150px;
+            overflow: auto;
+        }
+
+        label {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <nav class="row navbar navbar-expand-lg navbar-dark bg-primary">
+            <a class="navbar-brand" href="/"><img id="radar" src="/icons/radar.svg" alt="Radar for spotting supers"> Super Sightings</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                </button>
+            <div class="collapse navbar-collapse" id="navbarColor01">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/sightings">Sightings</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/locations">Locations<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/supers">Super People</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/organizations">Organizations</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="col-md-6" id="main">
+            <h2 th:text="'Location #' + ${location.locationId}">Location #1</h2>
+            <form class="form-horizontal" role="form" novalidate>
+                <div class="form-group row">
+                    <label for="txtLocationName" class="col-4 control-label">Location Name:</label>
+                    <div class="col-8">
+                        <input type="text" id="txtLocationName" class="form-control-plaintext" name="name" th:value="${location?.name}" disabled>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="numLatitude" class="col-4 control-label">Latitude:</label>
+                    <div class="col-8">
+                        <input type="number" id="numLatitude" class="form-control-plaintext" name="latitude" th:value="${location.latitude}" disabled>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="numLongitude" class="col-4 control-label">Longitude:</label>
+                    <div class="col-8">
+                        <input type="number" class="form-control-plaintext" name="longitude" th:value="${location.longitude}" disabled>
+                    </div>
+                </div>
+            </form>
+            <div class="row">
+                <div class="col-md-8">
+                    <a th:href="@{/location/edit/{locationId}(locationId=${location.locationId})}" href="#" class="btn btn-primary" th:title="'Edit #' + ${location.locationId}">Edit</a>
+                    <a th:href="@{/location/delete/{locationId}(locationId=${location.locationId})}" onclick="return confirm('Are you sure you would like to delete this?')" class="btn btn-danger" th:title="'Delete #' + ${location.locationId}" th:if="${!location.disabled}"
+                        th:disabled="${location.disabled}">Delete</a>
+                    <a href="/locations" class="btn btn-info">Cancel</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container text-center">
+        <footer id="footer">
+            <hr/>
+            <p><small>Style template made by <a href="http://thomaspark.co">Thomas Park</a>. |
+                Code released under the <a href="https://github.com/thomaspark/bootswatch/blob/master/LICENSE">MIT License</a>. |
+                Based on <a href="https://getbootstrap.com" rel="nofollow">Bootstrap</a>. |
+                Icons from <a href="http://fontawesome.io/" rel="nofollow">Font Awesome</a> and
+                radar icon by <a href="https://www.flaticon.com/authors/darius-dan" title="Darius Dan">Darius Dan</a>
+                from <a href="https://www.flaticon.com/">www.flaticon.com</a>.</p>
+            <p>Images provided by Marvel. <a href="http://marvel.com">© 2014 Marvel</a></small></p>
+        </footer>
+        <div class="container">
+</body>
+
+</html>

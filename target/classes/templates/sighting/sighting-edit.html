@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.1/flatly/bootstrap.min.css" rel="stylesheet" integrity="sha384-WuViQmTamrPyvMFZjf8te7HpKtdxuzV/HX1yG26a0d8yieIBr+beDf1ME99iX1cM" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <title>Edit Sighting</title>
+    <style>
+        #radar {
+            height: 50px;
+        }
+
+        #main {
+            padding-top: 10px;
+        }
+
+        .scroll {
+            height: 150px;
+            overflow: auto;
+        }
+
+        label {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <nav class="row navbar navbar-expand-lg navbar-dark bg-primary">
+            <a class="navbar-brand" href="/"><img id="radar" src="/icons/radar.svg" alt="Radar for spotting supers"> Super Sightings</a>
+            <div id="navbarColor01">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/sightings">Sightings<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/locations">Locations</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/supers">Super People</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/organizations">Organizations</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="col-md-6" id="main">
+            <h2>Edit Sighting</h2>
+            <form class="form-horizontal" role="form" method="POST" novalidate>
+                <div class="form-group row">
+                    <label for="txtDate" class="col-4 control-label">Date:</label>
+                    <div class="col-8">
+                        <input type="date" id="txtDate" name="date" class="form-control" th:value="${sighting.date}">
+                        <span class="text-danger" th:if="${#fields.hasErrors('sighting.date')}" th:errors="*{sighting.date}">Date Error</span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="txtTime" class="col-4 control-label">Time:</label>
+                    <div class="col-8">
+                        <input type="time" id="txtTime" name="time" class="form-control" th:value="${sighting.time}">
+                        <span class="text-danger" th:if="${#fields.hasErrors('sighting.time')}" th:errors="*{sighting.time}">Time Error</span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="txtLocationName" class="col-4 control-label">Location:</label>
+                    <div class="col-8">
+                        <select class="form-control" id="txtLocationName" name="location">
+                                <option th:each="location: ${allLocations}" th:selected="${sighting.hasLocation(location)}"
+                                    th:value="${location.locationId}"
+                                    th:text="${location.name} + ' ' + ${location.latitude} + ', ' + ${location.longitude}">
+                                    Manor 90.149404, -70.232456
+                                </option>
+                            </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="txtDescription" class="col-4 control-label">Description:</label>
+                    <div class="col-8">
+                        <textarea class="form-control scroll" id="txtDescription" name="description" th:text="${sighting.description}"></textarea>
+                        <span class="text-danger" th:if="${#fields.hasErrors('sighting.description')}" th:errors="*{sighting.description}">Description Error</span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="txtSupers" class="col-4 control-label">Supers Present:</label>
+                    <div id="txtSupers" class="col-8 scroll">
+                        <div class="form-check" th:each="super: ${allSupers}">
+                            <label class="form-check-label">
+                                    <input class="form-check-input" name="checkedSuperIds" type="checkbox" th:value="${super.superId}" th:checked="${sighting.containsSuper(super)}">
+                                    <span th:text="${super.name}">Super Name</span>
+                                </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8">
+                        <button class="btn btn-primary" type="submit">Save</button>
+                        <a href="/sightings" class="btn btn-danger">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="container text-center">
+        <footer id="footer">
+            <hr/>
+            <p><small>Style template made by <a href="http://thomaspark.co">Thomas Park</a>. |
+                Code released under the <a href="https://github.com/thomaspark/bootswatch/blob/master/LICENSE">MIT License</a>. |
+                Based on <a href="https://getbootstrap.com" rel="nofollow">Bootstrap</a>. |
+                Icons from <a href="http://fontawesome.io/" rel="nofollow">Font Awesome</a> and
+                radar icon by <a href="https://www.flaticon.com/authors/darius-dan" title="Darius Dan">Darius Dan</a>
+                from <a href="https://www.flaticon.com/">www.flaticon.com</a>.</p>
+            <p>Images provided by Marvel. <a href="http://marvel.com">© 2014 Marvel</a></small></p>
+        </footer>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.1/flatly/bootstrap.min.css" rel="stylesheet" integrity="sha384-WuViQmTamrPyvMFZjf8te7HpKtdxuzV/HX1yG26a0d8yieIBr+beDf1ME99iX1cM" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <title>Add Super Person</title>
+    <style>
+        #radar {
+            height: 50px;
+        }
+
+        #main {
+            padding-top: 10px;
+        }
+
+        .scroll {
+            height: 150px;
+            overflow: auto;
+        }
+
+        label {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <nav class="row navbar navbar-expand-lg navbar-dark bg-primary">
+            <a class="navbar-brand" href="/"><img id="radar" src="/icons/radar.svg" alt="Radar for spotting supers"> Super Sightings</a>
+            <div id="navbarColor01">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/sightings">Sightings</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/locations">Locations</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/supers">Super People<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/organizations">Organizations</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="col-md-6" id="main">
+            <h2>Add Super Person</h2>
+            <form role="form" method="POST" novalidate>
+                <div class="form-group row">
+                    <label for="txtSuperName" class="col-4 control-label">Super Name:</label>
+                    <div class="col-8">
+                        <input type="text" id="txtSuperName" class="form-control" name="name" th:value="${super?.name}">
+                        <span class="text-danger" th:if="${#fields.hasErrors('super.name')}" th:errors="*{super.name}">Name error</span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="txtFirstName" class="col-4 control-label">First Name:</label>
+                    <div class="col-8">
+                        <input type="text" id="txtFirstName" class="form-control" name="firstName" th:value="${super?.firstName}">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="txtLastName" class="col-4 control-label">Last Name:</label>
+                    <div class="col-8">
+                        <input type="text" id="txtLastName" class="form-control" name="lastName" th:value="${super?.lastName}">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="txtImage" class="col-4 control-label">Image:</label>
+                    <div class="col-8">
+                        <input type="text" id="txtImage" class="form-control" name="image" th:value="${super?.image}">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="nbrAlignment" class="col-4 control-label">Alignment:</label>
+                    <div class="col-8">
+                        <select type="number" class="form-control" id="nbrAlignment" name="alignment">
+                            <option th:selected="${super.alignment == 0}" value="0" text="Undetermined">Undetermined</option>
+                            <option th:selected="${super.alignment == 1}" value="1" text="Hero">Hero</option>
+                            <option th:selected="${super.alignment == 2}" value="2" text="Villain">Villain</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="txtDescription" class="col-4 control-label">Description:</label>
+                    <div class="col-8">
+                        <textarea class="form-control scroll" id="txtDescription" name="description" th:text="${super?.description}"></textarea>
+                        <span class="text-danger" th:if="${#fields.hasErrors('super.description')}" th:errors="*{super.description}">Description error</span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="txtAbilities" class="col-4 control-label">Abilities:</label>
+                    <div id="txtAbilities" class="col-8 scroll">
+                        <div class="form-check" th:each="ability: ${allAbilities}">
+                            <label class="form-check-label">
+                                <input class="form-check-input" name="checkedAbilityIds" type="checkbox" th:value="${ability.abilityId}">
+                                <span th:text="${ability?.name} + ':  ' + ${ability?.description}">Flight: Can fly</span>
+                            </label>
+                        </div>
+                    </div>
+                    <span class="text-danger" th:if="${#fields.hasErrors('super.abilities')}" th:errors="*{super.abilities}">Abilities error</span>
+                </div>
+                <div class="row">
+                    <div class="col-8">
+                        <button class="btn btn-primary" type="submit">Save</button>
+                        <a href="/supers" class="btn btn-danger">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="container text-center">
+        <footer id="footer">
+            <hr/>
+            <p><small>Style template made by <a href="http://thomaspark.co">Thomas Park</a>. |
+                    Code released under the <a href="https://github.com/thomaspark/bootswatch/blob/master/LICENSE">MIT License</a>. |
+                    Based on <a href="https://getbootstrap.com" rel="nofollow">Bootstrap</a>. |
+                    Icons from <a href="http://fontawesome.io/" rel="nofollow">Font Awesome</a> and
+                    radar icon by <a href="https://www.flaticon.com/authors/darius-dan" title="Darius Dan">Darius Dan</a>
+                    from <a href="https://www.flaticon.com/">www.flaticon.com</a>.</p>
+            <p>Images provided by Marvel. <a href="http://marvel.com">© 2014 Marvel</a></small></p>
+        </footer>
+    </div>
+</body>
+
+</html>

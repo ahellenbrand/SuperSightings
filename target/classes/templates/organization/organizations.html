@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.1/flatly/bootstrap.min.css" rel="stylesheet" integrity="sha384-WuViQmTamrPyvMFZjf8te7HpKtdxuzV/HX1yG26a0d8yieIBr+beDf1ME99iX1cM" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <title>All Organizations</title>
+    <style>
+        #radar {
+            height: 50px;
+        }
+
+        #main {
+            padding-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <nav class="row navbar navbar-expand-lg navbar-dark bg-primary">
+            <a class="navbar-brand" href="/"><img id="radar" src="/icons/radar.svg" alt="Radar for spotting supers"> Super Sightings</a>
+            <div id="navbarColor01">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/sightings">Sightings</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/locations">Locations</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/supers">Super People</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/organizations">Organizations<span class="sr-only">(current)</span></a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="row" id="main">
+            <h2 class="col-10">All Organizations</h2>
+            <div class="col-2 align-self-center">
+                <a href="/organization/add" class="col-12 btn btn-primary" title="Add an organization.">Add</a>
+            </div>
+        </div>
+        <div class="row">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th colspan="2">Headquarters Coordinates</th>
+                        <th>Members</th>
+                        <th style="width: 15%;">&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="organization: ${organizations}">
+                        <td th:text="${organization.name}">Fantastic 4</td>
+                        <td th:text="${organization?.description}">Crime fighting foursome.</td>
+                        <td th:text="${organization?.location?.latitude}">11.23648964</td>
+                        <td th:text="${organization?.location?.longitude}">-70.56489645</td>
+                        <td>
+                            <ul th:each="super: ${organization.supers}">
+                                <li th:text="${super?.name}">Super</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <a th:href="@{/organization/view/{organizationId}(organizationId=${organization.organizationId})}" href="#" class="btn btn-info" th:title="'View ' + ${organization.name}"><i class="far fa-eye"></i></a>
+                            <a th:href="@{/organization/edit/{organizationId}(organizationId=${organization.organizationId})}" href="#" class="btn btn-primary" th:title="'Edit ' + ${organization.name}"><i class="fas fa-pencil-alt"></i></a>
+                            <a th:href="@{/organization/delete/{organizationId}(organizationId=${organization.organizationId})}" onclick="return confirm('Are you sure you would like to delete this?')" class="btn btn-danger" th:title="'Delete ' + ${organization.name}"><i class="fas fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="container text-center">
+        <footer id="footer">
+            <hr/>
+            <p><small>Style template made by <a href="http://thomaspark.co">Thomas Park</a>. |
+                Code released under the <a href="https://github.com/thomaspark/bootswatch/blob/master/LICENSE">MIT License</a>. |
+                Based on <a href="https://getbootstrap.com" rel="nofollow">Bootstrap</a>. |
+                Icons from <a href="http://fontawesome.io/" rel="nofollow">Font Awesome</a> and
+                radar icon by <a href="https://www.flaticon.com/authors/darius-dan" title="Darius Dan">Darius Dan</a>
+                from <a href="https://www.flaticon.com/">www.flaticon.com</a>.</p>
+            <p>Images provided by Marvel. <a href="http://marvel.com">© 2014 Marvel</a></small></p>
+        </footer>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.1/flatly/bootstrap.min.css" rel="stylesheet" integrity="sha384-WuViQmTamrPyvMFZjf8te7HpKtdxuzV/HX1yG26a0d8yieIBr+beDf1ME99iX1cM" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <title>Super Sightings</title>
+    <style>
+        #radar {
+            height: 50px;
+        }
+
+        #about {
+            padding-top: 10px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <nav class="row navbar navbar-expand-lg navbar-dark bg-primary">
+            <a class="navbar-brand" href="/"><img id="radar" src="/icons/radar.svg" alt="Radar for spotting supers"> Super Sightings</a>
+            <div id="navbarColor01">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/sightings">Sightings</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/locations">Locations</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/supers">Super People</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/organizations">Organizations</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="row" id="about">
+            <h2>About Us</h2>
+            <p class="lead">We are a worldwide organization dedicated to overseeing the movements of super humans. This application is designed to assist others in tracking their whereabouts. If you would like to submit a sighting, please visit the <a href="/sightings">sightings page</a>                and include as much information about the experience as you can. Below are the ten most recent sightings and a map to those coordinates.</p>
+            <p><small>Data collected for informational purposes only.  Not intended for unlawful activities.</small></p>
+        </div>
+        <div class="row">
+            <h3>Recent Sightings</h3>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Latitude</th>
+                        <th>Longitude</th>
+                        <th>Super People Present</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="sighting: ${sightings}">
+                        <td th:text="${sighting.date}">2018-05-01</td>
+                        <td th:text="${sighting.time}">1:30 PM</td>
+                        <td th:text="${sighting.location.latitude}">40.7589</td>
+                        <td th:text="${sighting.location.longitude}">73.9851</td>
+                        <td>
+                            <ul th:each="super: ${sighting.supers}">
+                                <li th:text="${super.name}">Super</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="container text-center">
+        <footer id="footer">
+            <hr/>
+            <p><small>Style template made by <a href="http://thomaspark.co">Thomas Park</a>. |
+            Code released under the <a href="https://github.com/thomaspark/bootswatch/blob/master/LICENSE">MIT License</a>. |
+            Based on <a href="https://getbootstrap.com" rel="nofollow">Bootstrap</a>. |
+            Icons from <a href="http://fontawesome.io/" rel="nofollow">Font Awesome</a> and
+            radar icon by <a href="https://www.flaticon.com/authors/darius-dan" title="Darius Dan">Darius Dan</a>
+            from <a href="https://www.flaticon.com/">www.flaticon.com</a>.</p>
+            <p>Images provided by Marvel. <a href="http://marvel.com">© 2014 Marvel</a></small></p>
+        </footer>
+    </div>
+</body>
+
+</html>

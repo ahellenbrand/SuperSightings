@@ -1,0 +1,5 @@
+com\sg\superherosightings\data\SightingRepositoryTest.class
+com\sg\superherosightings\services\SightingServiceTest.class
+com\sg\superherosightings\data\LocationRepositoryTest.class
+com\sg\superherosightings\data\SuperRepositoryTest.class
+com\sg\superherosightings\services\SuperServiceTest.class
