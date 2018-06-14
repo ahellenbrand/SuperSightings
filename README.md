@@ -1,4 +1,4 @@
-# SuperSightings
+# Super Sightings
 Superhero Sightings project for Dev10/Software Guild using Java and Spring.
 
 The web application I made is called "Super Sightings".  It is a fictitious sightings blog/journal that people can use when they spot a superhero.  This crowd-sourcing framework can be applied to many other ideas like: good restaurants to eat at, campsites, and coffee shops.
